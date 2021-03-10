@@ -1,0 +1,161 @@
+clc
+clear all
+close all
+
+%% A – The heat exchanger length effect in counter flow
+A = readmatrix("A1_HT36C_A_dwcohen_3_2_2021_14_59_11");
+
+sstempsA_4 = [];
+sstempsA_3 = [];
+sstempsA_2 = [];
+sstempsA_1 = [];
+for(i=3:12)
+        sstempsA_4(i-2) = mean(A(375:432,i)); % 4 tube configuration
+        sstempsA_3(i-2) = mean(A(290:338,i)); % 3 tube configuration
+        sstempsA_2(i-2) = mean(A(433:530,i)); % 2 tube configuration
+        sstempsA_1(i-2) = mean(A(531:627,i)); % 1 tube configuration
+end
+Vcold_A = [mean(A(375:432,16)); mean(A(290:338,16)); mean(A(433:530,16)); mean(A(531:627,16))];
+Vhot_A = [mean(A(375:432,14)); mean(A(290:338,14)); mean(A(433:530,14)); mean(A(531:627,14))];
+
+ Counterflow, 4 tube configuration
+ scans = 1:(432-338);
+ figure('Name', 'A - Temperatures for 4-Tube Countercurrent Configuration');
+% 
+ plot(scans,A(339:432,2))
+ hold on
+ plot(scans,A(339:432,3))
+ plot(scans,A(339:432,4))
+ plot(scans,A(339:432,5))
+ plot(scans,A(339:432,6))
+ plot(scans,A(339:432,7))
+ plot(scans,A(339:432,8))
+ plot(scans,A(339:432,9))
+ plot(scans,A(339:432,10))
+ plot(scans,A(339:432,11))
+% hold off
+ 
+ legend('T1 (Hot Inlet)', 'T2', 'T3', 'T4', 'T5 (Hot Outlet)', 'T6 (Cold Inlet)', 'T7', 'T8', 'T9', 'T10 (Cold Outlet)', 'Location', 'SouthWest')
+ title('Counterflow, 4 Tube Configuration')
+ xlabel('Time (sec*10)')
+ ylabel('Temperature (C)')
+
+ Counterflow, 3 tube configuration
+
+ scans = 1:(338-204);
+ figure('Name', 'A - Temperatures for 3-Tube Countercurrent Configuration');
+% 
+ plot(scans,A(205:338,2))
+ hold on
+ plot(scans,A(205:338,3))
+ plot(scans,A(205:338,4))
+ plot(scans,A(205:338,5))
+ plot(scans,A(205:338,6))
+ plot(scans,A(205:338,7))
+ plot(scans,A(205:338,8))
+ plot(scans,A(205:338,9))
+ plot(scans,A(205:338,10))
+ plot(scans,A(205:338,11))
+ hold off
+% 
+ legend('T1 (Hot Inlet)', 'T2', 'T3', 'T4', 'T5 (Hot Outlet)', 'T6', 'T7 (Cold Inlet)', 'T8', 'T9', 'T10 (Cold Outlet)', 'Location', 'SouthWest')
+ title('Counterflow, 3 Tube Configuration')
+ xlabel('Time (sec*10)')
+ ylabel('Temperature (C)')
+
+ Counterflow, 2 tube configuration
+
+ scans = 1:(540-432);
+
+ figure('Name', 'A - Temperatures for 2-Tube Countercurrent Configuration');
+ 
+ plot(scans,A(433:530,2))
+ hold on
+ plot(scans,A(433:530,3))
+ plot(scans,A(433:530,4))
+ plot(scans,A(433:530,5))
+ plot(scans,A(433:530,6))
+ plot(scans,A(433:530,7))
+ plot(scans,A(433:530,8))
+ plot(scans,A(433:530,9))
+ plot(scans,A(433:530,10))
+ plot(scans,A(433:530,11))
+ hold off
+ 
+ legend('T1 (Hot Inlet)', 'T2', 'T3 (Hot Outlet)', 'T8 (Cold Inlet)', 'T9', 'T10 (Cold Outlet)',  'Location', 'SouthWest')
+ title('Counterflow, 2 Tube Configuration')
+ xlabel('Time (sec*10)')
+ ylabel('Temperature (C)')
+
+ Counterflow, 1 tube configuration
+ scans = 1:(627-530);
+
+ figure('Name', 'A - Temperatures for 1-Tube Countercurrent Configuration');
+ 
+ plot(scans,A(531:627,2))
+ hold on
+plot(scans,A(531:627,3))
+plot(scans,A(531:627,4))
+plot(scans,A(531:627,5))
+plot(scans,A(531:627,6))
+plot(scans,A(531:627,7))
+plot(scans,A(531:627,8))
+plot(scans,A(531:627,9))
+plot(scans,A(531:627,10))
+plot(scans,A(531:627,11))
+hold off
+
+legend('T1 (Hot Inlet)', 'T2 (Hot Outlet)', 'T9 (Cold Inlet)', 'T10 (Cold Outlet)', 'Location', 'SouthWest')
+title('Counterflow, 1 Tube Configuration')
+xlabel('Time (sec*10)')
+ylabel('Temperature (C)')
+
+
+%% B – Comparison of counter flow with parallel flow
+% Counter Flow
+B1 = readmatrix('A1_HT36C_A_dwcohen_3_2_2021_14_59_11');
+
+sstempsB1 = [];
+for(i=3:12)
+        sstempsB1(i-2) = mean(B1(65:94,i));
+end
+Vcold_B1 = mean(B1(60:71,16));
+Vhot_B1 = mean(B1(60:71,14));
+
+% Parallel Flow
+B2 = readmatrix('A1_HT36C_B2_dwcohen_3_2_2021_15_39_32');
+
+sstempsB2 = [];
+for(i=3:12)
+        sstempsB2(i-2) = mean(B2(45:67,i));
+end
+Vcold_B2 = mean(B2(45:67,16));
+Vhot_B2 = mean(B2(45:67,14));
+
+%% C – The mass flow rate effect in counter flow
+C = readmatrix('A1_HT36C_C_dwcohen_3_2_2021_15_57_41');
+
+sstempsC1 = [];
+sstempsC2 = [];
+for(i=3:12)
+        sstempsC1(i-2) = mean(C(20:33,i)); % Flow Rate 1 l/min
+        sstempsC2(i-2) = mean(C(55:70,i)); % Flow Rate 0.5 l/min
+end
+Vcold_C = [mean(C(20:33,16)); mean(C(55:70,16))];
+Vhot_C = [mean(C(20:33,14)); mean(C(55:70,14))];
+
+%% D – The mass flow rate effect in parallel flow
+D = readmatrix('A1_HT36C_D_dwcohen_3_2_2021_16_23_45');
+
+sstempsD1 = [];
+sstempsD2 = [];
+sstempsD3 = [];
+sstempsD4 = [];
+for(i=3:12)
+        sstempsD1(i-2) = mean(D(15:31,i)); % Flow Rate 3 l/min
+        sstempsD2(i-2) = mean(D(59:69,i)); % Flow Rate 2 l/min
+        sstempsD3(i-2) = mean(D(80:90,i)); % Flow Rate 1 l/min
+        sstempsD4(i-2) = mean(D(105:118,i)); % Flow Rate 0.5 l/min
+end
+Vcold_D = [mean(D(15:31,16)); mean(D(59:69,16)); mean(D(80:90,16)); mean(D(105:118,16))];
+Vhot_D = [mean(D(15:31,14)); mean(D(59:69,14)); mean(D(80:90,14)); mean(D(105:118,14))];
